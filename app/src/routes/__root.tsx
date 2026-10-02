@@ -38,7 +38,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       ],
       links: [
         { rel: "stylesheet", href: appCss },
-        { rel: "preload", href: B + "assets/tatafa/master.webp", as: "image" },
         { rel: "manifest", href: B + "site.webmanifest" },
         { rel: "icon", href: B + "favicon.ico", sizes: "any" },
         { rel: "icon", href: B + "favicon-16.png", sizes: "16x16", type: "image/png" },

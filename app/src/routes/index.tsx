@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import "@/tatafa.css";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/500.css";
@@ -267,7 +267,7 @@ function TatafaPage() {
           </div>
         </div>
         <div className="location-cruise">
-          <div className="location-cruise-image" style={{ "--bg": `url(${A}location-cruise.webp)`, "--bg-m": `url(${A}m/location-cruise.webp)` } as CSSProperties} role="img" aria-label={t.location.cruise.alt} />
+          <img className="location-cruise-image" {...pic("location-cruise")} alt={t.location.cruise.alt} loading="lazy" />
           <div className="location-cruise-copy">
             <span className="micro-kicker">{t.location.cruise.kicker}</span>
             <h3>{t.location.cruise.title}</h3>
