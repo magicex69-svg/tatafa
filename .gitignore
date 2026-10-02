@@ -1,0 +1,7 @@
+node_modules
+dist
+site
+.wrangler
+*.log
+# unused template media (30 MB scroll video)
+app/public/assets/world/
