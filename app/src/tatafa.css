@@ -512,3 +512,32 @@ html { scroll-behavior:smooth; background:var(--t-bg); }
 .eco-scenarios { margin-top:40px; }
 .eco-scenarios + .eco-note { margin-top:40px; }
 @media (max-width:900px) { .eco-scenarios { margin-top:26px; } .eco-scenarios + .eco-note { margin-top:20px; } }
+
+/* ---- Phones: lighter rendering ---------------------------------------------- */
+.location-cruise-image { background-image:var(--bg),linear-gradient(160deg,#17424a,#0c2a33); }
+.reveal-ready .section-wrap > *,.reveal-ready .offer-content > *,.reveal-ready .footer-main > * { will-change:auto; }
+@media (max-width:700px) {
+  .location-cruise-image { background-image:var(--bg-m),linear-gradient(160deg,#17424a,#0c2a33); }
+  /* blur and glow are expensive on phone GPUs */
+  .lang-switch,.object-arrow,.object-count { backdrop-filter:none; background:rgba(6,23,30,.82); }
+  .eco-bar-ours.is-base .eco-bar-fill,.eco-scenario.is-base,.object-location,.comparison-divider { box-shadow:none; }
+  .comparison-frame:after { display:none; }
+  .eco-bar-fill { animation:none; }
+  .privileges-visual img { transition:opacity .35s ease; transform:none; }
+  /* the picture scrolls with the page instead of sticking over the list */
+  .privileges-visual { position:relative; top:auto; z-index:auto; aspect-ratio:4 / 3; max-height:none; }
+  /* fade only, no movement */
+  .reveal-ready .section-wrap > *,.reveal-ready .offer-content > *,.reveal-ready .footer-main > * { transform:none; transition:opacity .45s ease; transition-delay:0s !important; }
+  .hero-vision > img { object-position:center 82%; }
+  .object-shot { animation:none; }
+}
+@media (max-width:1100px) {
+  /* fixed header: solid, so page text does not show through it */
+  .site-nav { background:rgba(6,23,30,.96); border-bottom:1px solid var(--t-rule); }
+}
+@media (max-width:700px) {
+  .object-stage .object-location img,.object-stage .object-thumbs img { height:auto; min-height:0; }
+  .object-stage .object-location img { aspect-ratio:16 / 9; }
+  .hero-heading p { display:none; }
+  .object-stats + .object-note { margin-top:18px; }
+}

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "@/tatafa.css";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/500.css";
@@ -10,6 +10,9 @@ import "@fontsource/ibm-plex-mono/400.css";
 import { content, LANGS, type Lang, type ZoneId } from "@/tatafa-content";
 
 const A = import.meta.env.BASE_URL + "assets/tatafa/";
+// Full-size image on desktop, a ~1100px copy on phones; small() is for thumbnails and insets everywhere.
+const pic = (name: string, mobile: string = name) => ({ src: `${A}${name}.webp`, srcSet: `${A}m/${mobile}.webp 1100w, ${A}${name}.webp 2400w`, sizes: "(max-width:700px) 360px, 100vw" });
+const small = (name: string) => `${A}s/${name}.webp`;
 const MAPS_URL = "https://maps.app.goo.gl/nLr2LjTFY4kTdrXP9";
 const WIKI_URL = "https://en.wikipedia.org/wiki/Tatafa";
 // Where the "discuss entry terms" button leads: put the real address here, e.g. "mailto:name@domain" or a Telegram link.
@@ -93,7 +96,9 @@ function TatafaPage() {
   const [infra, setInfra] = useState("");
   const [shot, setShot] = useState(0);
   const [menu, setMenu] = useState(false);
-  const [priv, setPriv] = useState(0);
+  const [priv, setPrivRaw] = useState(0);
+  const [seenPriv, setSeenPriv] = useState([0]);
+  const setPriv = (i: number) => { setPrivRaw(i); setSeenPriv((seen) => (seen.includes(i) ? seen : [...seen, i])); };
   const t = content[lang];
   const pick = (id: ZoneId) => { setSelected(id); setShot(0); };
   const active = byId(hovered ?? selected);
@@ -138,7 +143,7 @@ function TatafaPage() {
         if (item.getBoundingClientRect().top <= limit) item.classList.add("is-in");
       });
     };
-    const timer = window.setInterval(check, 350);
+    const timer = window.setInterval(check, 500);
     const stop = () => { window.clearInterval(timer); window.removeEventListener("scroll", check); window.removeEventListener("resize", check); };
     window.addEventListener("scroll", check, { passive: true });
     window.addEventListener("resize", check);
@@ -188,7 +193,7 @@ function TatafaPage() {
       </header>
 
       <section className="hero-vision" aria-label={t.hero.aria}>
-        <img src={A + "master.webp"} alt={t.hero.alt} fetchPriority="high" />
+        <img {...pic("master", "hero")} alt={t.hero.alt} fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-heading"><p>{t.hero.kicker}</p><h1>TATAFA</h1><span>{t.hero.tagline}</span></div>
         <a className="hero-explore" href="#masterplan">{t.nav.openMap} {arrow}</a>
@@ -200,8 +205,8 @@ function TatafaPage() {
         <div className="today-composition">
           <figure>
             <div className="comparison-frame">
-              <img src={A + "existing-compare.webp"} alt={t.today.altExisting} loading="lazy" />
-              <img className="comparison-future" src={A + "master.webp"} alt={t.today.altProposed} loading="lazy" style={{ clipPath: `inset(0 ${100 - comparison}% 0 0)` }} />
+              <img {...pic("existing-compare")} alt={t.today.altExisting} loading="lazy" />
+              <img className="comparison-future" {...pic("master")} alt={t.today.altProposed} loading="lazy" style={{ clipPath: `inset(0 ${100 - comparison}% 0 0)` }} />
               <div className="comparison-divider" style={{ left: `${comparison}%` }} />
               <label className="comparison-access">{t.today.sliderLabel}<input aria-label={t.today.sliderAria} type="range" min="0" max="100" value={comparison} onChange={(e) => setComparison(Number(e.target.value))} /></label>
               <span className="comparison-current">{t.today.existing}</span>
@@ -228,7 +233,7 @@ function TatafaPage() {
         <ol className="history-track">
           {t.history.items.map((h, i) => (
             <li key={h.year} className="history-card">
-              <div className="history-image" style={{ backgroundImage: `url(${A}${historyImages[i].image}.webp)`, backgroundPosition: historyImages[i].pos }} role="img" aria-label={h.title} />
+              <div className="history-image" style={{ backgroundImage: `url(${A}m/${historyImages[i].image}.webp)`, backgroundPosition: historyImages[i].pos }} role="img" aria-label={h.title} />
               <span className="history-year">{h.year}</span><h3>{h.title}</h3><p>{h.text}</p>
             </li>
           ))}
@@ -262,7 +267,7 @@ function TatafaPage() {
           </div>
         </div>
         <div className="location-cruise">
-          <div className="location-cruise-image" style={{ backgroundImage: `url(${A}location-cruise.webp)` }} role="img" aria-label={t.location.cruise.alt} />
+          <div className="location-cruise-image" style={{ "--bg": `url(${A}location-cruise.webp)`, "--bg-m": `url(${A}m/location-cruise.webp)` } as CSSProperties} role="img" aria-label={t.location.cruise.alt} />
           <div className="location-cruise-copy">
             <span className="micro-kicker">{t.location.cruise.kicker}</span>
             <h3>{t.location.cruise.title}</h3>
@@ -278,7 +283,7 @@ function TatafaPage() {
           <div className="map-column">
             <div className="map-scroll" ref={mapScroll}>
               <div className="map-canvas">
-                <img src={A + "master.webp"} alt={t.map.alt} loading="lazy" />
+                <img {...pic("master")} alt={t.map.alt} loading="lazy" />
                 <svg className="map-routes" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
                   {routeIds.map((id) => <path key={id} className={infra === id ? "route-on" : ""} d={routePaths[id]} />)}
                 </svg>
@@ -293,8 +298,8 @@ function TatafaPage() {
           </div>
           <aside className="map-inspector">
             <span className="inspector-status">{t.categories[active.category]}</span>
-            <div className="inspector-image" style={{ backgroundImage: `url('${A}master.webp')`, backgroundSize: "270%", backgroundPosition: `${active.x}% ${active.y}%` }} role="img" aria-label={`${t.map.zoom}: ${activeText.title}`} />
-            <img className="inspector-detail" src={A + active.images[0] + ".webp"} alt={`${t.map.visual}: ${activeText.title}`} loading="lazy" />
+            <div className="inspector-image" style={{ backgroundImage: `url('${A}m/master.webp')`, backgroundSize: "270%", backgroundPosition: `${active.x}% ${active.y}%` }} role="img" aria-label={`${t.map.zoom}: ${activeText.title}`} />
+            <img className="inspector-detail" src={small(active.images[0])} alt={`${t.map.visual}: ${activeText.title}`} loading="lazy" />
             <h3>{activeText.title}</h3><p>{activeText.subtitle}</p><small>{activeText.note}</small>
             <a href="#objects" onClick={() => pick(active.id)}>{t.map.view} {arrow}</a>
           </aside>
@@ -320,8 +325,8 @@ function TatafaPage() {
           <div className="object-stage" role="tabpanel">
             <figure>
               <div className="object-frame">
-                <img className="object-shot" key={selected + shot} src={A + current.images[shot] + ".webp"} alt={`${t.objects.shotAlt}: ${currentText.title}, ${t.objects.shot.toLowerCase()} ${shot + 1}`} loading="lazy" />
-                <div className="object-location"><img src={A + "master.webp"} alt={t.objects.locationAlt} loading="lazy" /><span style={{ left: `${current.x}%`, top: `${current.y}%` }} /></div>
+                <img className="object-shot" key={selected + shot} {...pic(current.images[shot])} alt={`${t.objects.shotAlt}: ${currentText.title}, ${t.objects.shot.toLowerCase()} ${shot + 1}`} loading="lazy" />
+                <div className="object-location"><img src={small("master")} alt={t.objects.locationAlt} loading="lazy" /><span style={{ left: `${current.x}%`, top: `${current.y}%` }} /></div>
                 {many ? (
                   <>
                     <button type="button" className="object-arrow object-prev" onClick={() => setShot((shot + current.images.length - 1) % current.images.length)} aria-label={t.objects.prev}><span aria-hidden="true">←</span></button>
@@ -332,7 +337,7 @@ function TatafaPage() {
               </div>
               {many ? (
                 <div className="object-thumbs" role="group" aria-label={t.objects.shotsAria}>
-                  {current.images.map((img, i) => <button type="button" key={img} onClick={() => setShot(i)} aria-pressed={shot === i} aria-label={`${t.objects.shot} ${i + 1}`} className={shot === i ? "active" : ""}><img src={A + img + ".webp"} alt="" loading="lazy" /></button>)}
+                  {current.images.map((img, i) => <button type="button" key={img} onClick={() => setShot(i)} aria-pressed={shot === i} aria-label={`${t.objects.shot} ${i + 1}`} className={shot === i ? "active" : ""}><img src={small(img)} alt="" loading="lazy" /></button>)}
                   <span className="object-thumbs-hint">{t.objects.shotsCount(current.images.length)}</span>
                 </div>
               ) : null}
@@ -343,7 +348,7 @@ function TatafaPage() {
             {currentText.includes ? <ul className="object-includes" aria-label={t.objects.includesAria}>{currentText.includes.map((item) => <li key={item}>{item}</li>)}</ul> : null}
             {current.build && currentText.build ? (
               <div className="object-build">
-                <img src={A + current.build + ".webp"} alt={t.objects.buildAlt} loading="lazy" />
+                <img {...pic(current.build)} alt={t.objects.buildAlt} loading="lazy" />
                 <div><span className="micro-kicker">{currentText.build.kicker}</span><h3>{currentText.build.title}</h3><p>{currentText.build.text}</p><small>{t.objects.buildCredit}</small></div>
               </div>
             ) : null}
@@ -355,7 +360,7 @@ function TatafaPage() {
         <div className="section-heading"><span className="micro-kicker">{t.privileges.kicker}</span><h2>{t.privileges.title}</h2><p>{t.privileges.lead}</p></div>
         <div className="privileges-layout">
           <div className="privileges-visual" aria-hidden="true">
-            {privilegeImages.map((p, i) => <img key={p.image} src={A + p.image + ".webp"} alt="" loading="lazy" style={{ objectPosition: p.pos }} className={priv === i ? "is-on" : ""} />)}
+            {privilegeImages.map((p, i) => seenPriv.includes(i) ? <img key={p.image} {...pic(p.image)} alt="" loading="lazy" style={{ objectPosition: p.pos }} className={priv === i ? "is-on" : ""} /> : null)}
             <div className="privileges-visual-caption"><strong>{two(priv + 1)}</strong><span>{t.privileges.items[priv].tag}</span></div>
           </div>
           <ol className="privileges-list">
@@ -464,7 +469,7 @@ function TatafaPage() {
       </section>
 
       <section id="contact" className="offer-section" aria-labelledby="offer-title">
-        <img src={A + "dome-pier.webp"} alt="" loading="lazy" />
+        <img {...pic("dome-pier")} alt="" loading="lazy" />
         <div className="offer-content">
           <span className="micro-kicker">{t.offer.kicker}</span>
           <h2 id="offer-title">{t.offer.title}</h2>
