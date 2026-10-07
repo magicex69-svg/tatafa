@@ -15,8 +15,8 @@ const pic = (name: string, mobile: string = name) => ({ src: `${A}${name}.webp`,
 const small = (name: string) => `${A}s/${name}.webp`;
 const MAPS_URL = "https://maps.app.goo.gl/nLr2LjTFY4kTdrXP9";
 const WIKI_URL = "https://en.wikipedia.org/wiki/Tatafa";
-// Where the "discuss entry terms" button leads: put the real address here, e.g. "mailto:name@domain" or a Telegram link.
-const CONTACT_URL = "mailto:";
+const CONTACT_EMAIL = "chairman@harmony-hub.group";
+const CONTACT_URL = `mailto:${CONTACT_EMAIL}`;
 const LANG_KEY = "tatafa-lang";
 
 // Structure only. Every word shown on the page comes from tatafa-content.ts.
@@ -492,7 +492,7 @@ function TatafaPage() {
           </nav>
           <div className="footer-col">
             <span>{t.footer.contactsTitle}</span>
-            <a href={CONTACT_URL}>{t.footer.contact} {arrow}</a>
+            <a href={CONTACT_URL}>{CONTACT_EMAIL} {arrow}</a>
             <a href={MAPS_URL} target="_blank" rel="noreferrer">{t.footer.maps} {arrow}</a>
             <a href={WIKI_URL} target="_blank" rel="noreferrer">{t.footer.wiki} {arrow}</a>
           </div>

@@ -225,7 +225,7 @@ const ru: Content = {
   footer: {
     tagline: "Private Island Masterplan", region: "Королевство Тонга, группа Хаапай", coords: "19°52′31″ ю. ш., 174°25′12″ з. д.",
     sectionsTitle: "Разделы", links: ["Остров до и после", "Королевство Тонга", "Где это", "Карта острова", "Объекты", "Привилегии", "Инвестору"],
-    contactsTitle: "Контакты", contact: "Обсудить условия входа", maps: "Остров на Google Maps", wiki: "Wikipedia",
+    contactsTitle: "Контакты", contact: "chairman@harmony-hub.group", maps: "Остров на Google Maps", wiki: "Wikipedia",
     legal: "Все изображения на сайте — концепт-визуализация. Архитектурная и инженерная документация проходит проверку, параметры и этапы проекта уточняются.",
     top: "К началу ↑", brandAria: "Tatafa, к началу", sectionsAria: "Разделы",
   },
@@ -392,7 +392,7 @@ const en: Content = {
   footer: {
     tagline: "Private Island Masterplan", region: "Kingdom of Tonga, Haʻapai group", coords: "19°52′31″ S, 174°25′12″ W",
     sectionsTitle: "Sections", links: ["The island before and after", "Kingdom of Tonga", "Location", "Map of the island", "Places", "Privileges", "Investors"],
-    contactsTitle: "Contact", contact: "Discuss entry terms", maps: "The island on Google Maps", wiki: "Wikipedia",
+    contactsTitle: "Contact", contact: "chairman@harmony-hub.group", maps: "The island on Google Maps", wiki: "Wikipedia",
     legal: "All images on this site are concept visualisations. Architectural and engineering documentation is under review; project parameters and phases are being finalised.",
     top: "Back to top ↑", brandAria: "Tatafa, back to top", sectionsAria: "Sections",
   },
@@ -559,7 +559,7 @@ const zh: Content = {
   footer: {
     tagline: "私人岛屿总体规划", region: "汤加王国，哈派群岛", coords: "南纬 19°52′31″，西经 174°25′12″",
     sectionsTitle: "栏目", links: ["岛屿的现状与未来", "汤加王国", "位置", "岛屿地图", "项目", "优势", "投资者"],
-    contactsTitle: "联系方式", contact: "洽谈进入条件", maps: "在 Google 地图上查看岛屿", wiki: "Wikipedia",
+    contactsTitle: "联系方式", contact: "chairman@harmony-hub.group", maps: "在 Google 地图上查看岛屿", wiki: "Wikipedia",
     legal: "本网站所有图像均为概念效果图。建筑与工程文件正在审核中，项目参数与分期仍在确定。",
     top: "返回顶部 ↑", brandAria: "Tatafa，返回顶部", sectionsAria: "栏目",
   },
