@@ -255,7 +255,7 @@ html { scroll-behavior:smooth; background:var(--t-bg); }
 .footer-brand small { display:block; margin-top:14px; color:var(--t-muted); font-size:13px; line-height:1.6; font-variant-numeric:tabular-nums; }
 .footer-col { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
 .footer-col > span { margin-bottom:12px; color:var(--t-accent); font:10px 'IBM Plex Mono',monospace; letter-spacing:.15em; text-transform:uppercase; }
-.footer-col a { padding:6px 0; color:var(--t-muted); font-size:15px; transition:color .25s; }
+.footer-col a { padding:6px 0; color:var(--t-muted); font-size:15px; overflow-wrap:anywhere; transition:color .25s; }
 .footer-col a:hover,.footer-top:hover { color:var(--t-accent); }
 .footer-legal { margin-top:clamp(40px,5vw,72px); padding-top:22px; border-top:1px solid var(--t-rule); display:flex; justify-content:space-between; align-items:baseline; gap:16px 30px; flex-wrap:wrap; }
 .footer-legal p { max-width:720px; color:var(--t-muted); font:10px 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; line-height:1.7; }

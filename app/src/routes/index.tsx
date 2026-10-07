@@ -492,7 +492,8 @@ function TatafaPage() {
           </nav>
           <div className="footer-col">
             <span>{t.footer.contactsTitle}</span>
-            <a href={CONTACT_URL}>{CONTACT_EMAIL} {arrow}</a>
+            <a href={CONTACT_URL}>{t.footer.contact} {arrow}</a>
+            <a href={CONTACT_URL}>{CONTACT_EMAIL}</a>
             <a href={MAPS_URL} target="_blank" rel="noreferrer">{t.footer.maps} {arrow}</a>
             <a href={WIKI_URL} target="_blank" rel="noreferrer">{t.footer.wiki} {arrow}</a>
           </div>
